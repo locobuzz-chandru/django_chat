@@ -1,6 +1,7 @@
 import json
 import logging
 
+from django.contrib.auth import authenticate
 from django.forms import model_to_dict
 
 from .models import User
@@ -14,9 +15,9 @@ def register_user(request):
     try:
         data = json.loads(request.body)
         if request.method == 'POST':
-            user = User.objects.create(username=data.get('username'), password=data.get('password'),
-                                       first_name=data.get('first_name'), last_name=data.get('last_name'),
-                                       email=data.get('email'), phone_no=data.get('phone_no'))
+            user = User.objects.create_user(username=data.get('username'), password=data.get('password'),
+                                            first_name=data.get('first_name'), last_name=data.get('last_name'),
+                                            email=data.get('email'), phone_no=data.get('phone_no'))
             return get_response(data=model_to_dict(user, exclude=("password",)), status=201)
         return get_response(status=405)
 
@@ -30,7 +31,7 @@ def login_user(request):
     try:
         data = json.loads(request.body)
         if request.method == "POST":
-            user = User.objects.filter(username=data.get('username'), password=data.get('password')).first()
+            user = authenticate(username=data.get('username'), password=data.get('password'))
             if user is not None:
                 return get_response(data=model_to_dict(user, exclude=("password",)), message="login successful",
                                     status=200)
@@ -40,4 +41,3 @@ def login_user(request):
     except Exception as e:
         logging.exception(e)
         return get_response(message=str(e), status=400)
-    
