@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %} CRUD APPLICATION {% endblock %}
+{% block content %}
+{% if select_group %}
+<form method="POST" action="{% url 'update' select_group.id %}">
+    {% csrf_token %}
+    <div class="form-group mb-3">
+        <label>Group Name</label>
+        <input type="text" class="form-control" value="{{select_group.name}}" name="name" placeholder="Enter Group Name"
+               required>
+    </div>
+    <div class="text-center mt-4">
+        <button type="submit" class="btn btn-success">Update Group</button>
+    </div>
+</form>
+{% else %}
+<form method="POST" action="{% url 'add' %}">
+    {% csrf_token %}
+    <div class="form-group mb-3">
+        <label>Group Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Group Name" required>
+    </div>
+    <div class="text-center mt-4">
+        <button type="submit" class="btn btn-success">Create Group</button>
+    </div>
+</form>
+{% endif %}
+<div class="mt-5">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">User ID</th>
+            <th scope="col">Group Name</th>
+            <th scope="col">Control</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for group in group_list %}
+        <tr>
+            <td>{{group.user_id}}</td>
+            <td>{{group.name}}</td>
+            <td>
+                <a href="{% url 'edit' group.id %}" class="btn mr-5 btn-warning">EDIT</a>
+                <a href="{% url 'delete' group.id %}" class="btn mr-5 btn-danger">DELETE</a>
+                <a href="{% url 'members' group_id=group.id %}" class="btn btn-danger">MEMBERS</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

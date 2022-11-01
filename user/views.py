@@ -1,43 +1,82 @@
-import json
+from django.contrib.auth import authenticate, login, logout
+from .models import User
+from chat.models import Group
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 import logging
 
-from django.contrib.auth import authenticate
-from django.forms import model_to_dict
 
-from .models import User
-from .utils import get_response
+@login_required(login_url='/auth/login/')
+def index(request):
+    """Function to view groups"""
+    try:
+        group_list = Group.objects.filter(user=request.user)
+        context = {'group_list': group_list}
+        return render(request, 'index.html', context)
 
-logging.basicConfig(filename='file.log', filemode='w', level=logging.DEBUG)
+    except Exception as e:
+        logging.exception(e)
+        return HttpResponse(e)
 
 
 def register_user(request):
     """Function to register user details"""
     try:
-        data = json.loads(request.body)
+        if request.method == 'GET':
+            return render(request, 'user/registration.html')
         if request.method == 'POST':
-            user = User.objects.create_user(username=data.get('username'), password=data.get('password'),
-                                            first_name=data.get('first_name'), last_name=data.get('last_name'),
-                                            email=data.get('email'), phone_no=data.get('phone_no'))
-            return get_response(data=model_to_dict(user, exclude=("password",)), status=201)
-        return get_response(status=405)
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            email = request.POST['email']
+            phone_no = request.POST['phone_no']
+            username = request.POST['username']
+            password1 = request.POST['password1']
+            password2 = request.POST['password2']
+
+            if password1 == password2:
+                if User.objects.filter(username=username).exists():
+                    return HttpResponse('Username is taken')
+                else:
+                    user = User.objects.create_user(first_name=first_name, last_name=last_name, email=email,
+                                                    phone_no=phone_no, username=username, password=password1)
+                    user.save()
+                    return redirect('login')
+            return HttpResponse('Password is not matching')
+        return render(request, 'user/registration.html')
 
     except Exception as e:
         logging.exception(e)
-        return get_response(message=str(e), status=400)
+        return HttpResponse(e)
 
 
 def login_user(request):
     """Function to login the user"""
     try:
-        data = json.loads(request.body)
+        if request.method == 'GET':
+            return render(request, 'user/login.html')
         if request.method == "POST":
-            user = authenticate(username=data.get('username'), password=data.get('password'))
+            username = request.POST['username']
+            password = request.POST['password']
+
+            user = authenticate(username=username, password=password)
             if user is not None:
-                return get_response(data=model_to_dict(user, exclude=("password",)), message="login successful",
-                                    status=200)
-            return get_response(status=406)
-        return get_response(status=405)
+                login(request, user)
+                return redirect('index')
+            return HttpResponse('invalid credentials')
+        return render(request, 'user/login.html')
 
     except Exception as e:
         logging.exception(e)
-        return get_response(message=str(e), status=400)
+        return HttpResponse(e)
+
+
+def logout_user(request):
+    """Function to logout the user"""
+    try:
+        logout(request)
+        return redirect('login')
+
+    except Exception as e:
+        logging.exception(e)
+        return HttpResponse(e)

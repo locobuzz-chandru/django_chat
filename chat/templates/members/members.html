@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %} MEMBERS {% endblock %}
+{% block content %}
+<div class="mt-5">
+    <h3>MEMBERS TABLE</h3>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Control</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for member in member_list %}
+        <tr>
+            <td>{{member.id}}</td>
+            <td>{{member.username}}</td>
+            <td>
+                <a href="{% url 'remove_member' group_id=group_id user_id=member.id %}" class="btn btn-danger">DELETE</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        <h3>USERS TABLE</h3>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Control</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in user_list %}
+        <tr>
+            <td>{{user.id}}</td>
+            <td>{{user.username}}</td>
+            <td>
+                <a href="{% url 'add_member' group_id=group_id user_id=user.id %}" class="btn btn-danger">ADD</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
