@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 import logging
 
+logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBUG)
+
 
 @login_required(login_url='/auth/login/')
 def index(request):
