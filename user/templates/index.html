@@ -38,7 +38,7 @@
         {% for group in group_list %}
         <tr>
             <td>{{group.user_id}}</td>
-            <td>{{group.name}}</td>
+            <td><a href="{% url 'chatroom' room_name=group.name %}" >{{group.name}}</a></td>
             <td>
                 <a href="{% url 'edit' group.id %}" class="btn mr-5 btn-warning">EDIT</a>
                 <a href="{% url 'delete' group.id %}" class="btn mr-5 btn-danger">DELETE</a>

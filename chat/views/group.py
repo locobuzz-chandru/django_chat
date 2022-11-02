@@ -85,8 +85,14 @@ def get_members(request, group_id):
     """Function to display members and users"""
     try:
         group = Group.objects.get(id=group_id, user=request.user)
-        context = {'member_list': group.members.all(), 'user_list': User.objects.all().exclude(id=request.user.id),
-                   'group_id': group_id}
+        member_list = group.members.all()
+        exclude_ids = list(map(lambda x: x.id, member_list))
+        exclude_ids.append(request.user.id)
+        context = {
+            'member_list': member_list,
+            'user_list': User.objects.exclude(id__in=exclude_ids),
+            'group_id': group_id
+        }
         return render(request, 'members/members.html', context)
 
     except Exception as e:
