@@ -40,9 +40,8 @@ def register_user(request):
                 if User.objects.filter(username=username).exists():
                     return HttpResponse('Username is taken')
                 else:
-                    user = User.objects.create_user(first_name=first_name, last_name=last_name, email=email,
-                                                    phone_no=phone_no, username=username, password=password1)
-                    user.save()
+                    User.objects.create_user(first_name=first_name, last_name=last_name, email=email,
+                                             phone_no=phone_no, username=username, password=password1)
                     return redirect('login')
             return HttpResponse('Password is not matching')
         return render(request, 'user/registration.html')
