@@ -17,13 +17,14 @@
             <td>{{member.id}}</td>
             <td>{{member.username}}</td>
             <td>
-                <a href="{% url 'remove_member' group_id=group_id user_id=member.id %}" class="btn btn-danger">DELETE</a>
+                <a href="{% url 'remove_member' group_id=group_id user_id=member.id %}"
+                   class="btn btn-danger">DELETE</a>
             </td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
-        <h3>USERS TABLE</h3>
+    <h3>USERS TABLE</h3>
     <table class="table table-bordered">
         <thead>
         <tr>

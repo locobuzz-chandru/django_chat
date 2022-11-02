@@ -25,8 +25,6 @@ def index(request):
 def register_user(request):
     """Function to register user details"""
     try:
-        if request.method == 'GET':
-            return render(request, 'user/registration.html')
         if request.method == 'POST':
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
@@ -54,8 +52,6 @@ def register_user(request):
 def login_user(request):
     """Function to login the user"""
     try:
-        if request.method == 'GET':
-            return render(request, 'user/login.html')
         if request.method == "POST":
             username = request.POST['username']
             password = request.POST['password']

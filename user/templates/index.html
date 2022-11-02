@@ -5,7 +5,7 @@
 <form method="POST" action="{% url 'update' select_group.id %}">
     {% csrf_token %}
     <div class="form-group mb-3">
-        <label>Group Name</label>
+        <label>Edit Group Name</label>
         <input type="text" class="form-control" value="{{select_group.name}}" name="name" placeholder="Enter Group Name"
                required>
     </div>
@@ -17,7 +17,7 @@
 <form method="POST" action="{% url 'add' %}">
     {% csrf_token %}
     <div class="form-group mb-3">
-        <label>Group Name</label>
+        <label>New Group Name</label>
         <input type="text" class="form-control" id="name" name="name" placeholder="Enter Group Name" required>
     </div>
     <div class="text-center mt-4">
