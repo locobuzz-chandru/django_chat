@@ -5,3 +5,9 @@ class Group(models.Model):
     name = models.CharField(max_length=200)
     user = models.ForeignKey('user.User', on_delete=models.CASCADE)
     members = models.ManyToManyField('user.User', related_name='members')
+
+#model - messages
+#group - frn key grup model
+#user - frn key user model
+#message - txtField()
+#date time createdat
