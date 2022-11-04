@@ -39,7 +39,7 @@
             <td>{{user.id}}</td>
             <td>{{user.username}}</td>
             <td>
-                <a href="{% url 'add_member' group_id=group_id user_id=user.id %}" class="btn btn-danger">ADD</a>
+                <a href="{% url 'add_member' group_id=group_id user_id=user.id %}" class="btn btn-success">ADD</a>
             </td>
         </tr>
         {% endfor %}

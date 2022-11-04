@@ -5,12 +5,21 @@
     <title>Chat Room</title>
 </head>
 <body>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
+    <textarea id="chat-log" cols="100" rows="20">
+        {% for message in message_list %}
+            {{ message.user.username }} : {{ message.message }}
+        {% endfor %}
+    </textarea><br>
     <input id="chat-message-input" type="text" size="100"><br>
     <input id="chat-message-submit" type="button" value="Send">
+    <div class="button">
+            <a href="{% url 'logout' %}"> <button class="button">Logout</button></a>
+    </div>
     {{ room_name|json_script:"room-name" }}
+    {{ username|json_script:"username" }}
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
+        const userName = JSON.parse(document.getElementById('username').textContent);
 
         const chatSocket = new WebSocket(
             'ws://'
@@ -19,10 +28,9 @@
             + roomName
             + '/'
         );
-        console.log(chatSocket)
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
+            document.querySelector('#chat-log').value += (data.username + ' : ' + data.message + '\n');
         };
 
         chatSocket.onclose = function(e) {
@@ -40,7 +48,10 @@
             const messageInputDom = document.querySelector('#chat-message-input');
             const message = messageInputDom.value;
             chatSocket.send(JSON.stringify({
-                'message': message
+                'message': message,
+                'username':userName,
+                'room_name': roomName
+
             }));
             messageInputDom.value = '';
         };
