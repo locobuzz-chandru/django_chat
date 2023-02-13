@@ -10,19 +10,6 @@ logging.basicConfig(filename='example.log', encoding='utf-8', level=logging.DEBU
 
 
 @login_required(login_url='/auth/login/')
-def index(request):
-    """Function to view groups"""
-    try:
-        group_list = Group.objects.filter(user=request.user)
-        context = {'group_list': group_list}
-        return render(request, 'index.html', context)
-
-    except Exception as e:
-        logging.exception(e)
-        return HttpResponse(e)
-
-
-@login_required(login_url='/auth/login/')
 def add_group(request):
     """Function to create group"""
     try:

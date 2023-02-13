@@ -10,5 +10,5 @@ urlpatterns = [
     path('members/<int:group_id>/', views.get_members, name='members'),
     path('add_member/<int:group_id>/<int:user_id>/', views.add_member, name='add_member'),
     path('remove_member/<int:group_id>/<int:user_id>/', views.remove_member, name='remove_member'),
-    path('<str:room_name>/', views.room, name='room')
+    path('<str:room_name>/', views.room, name='room'),
 ]
