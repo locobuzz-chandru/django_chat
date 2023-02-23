@@ -14,7 +14,6 @@ def index(request):
     """Function to view groups"""
     try:
         group_list = (Group.objects.filter(user=request.user) | Group.objects.filter(members=request.user)).distinct()
-        print(group_list)
         context = {'group_list': group_list}
         return render(request, 'index.html', context)
 

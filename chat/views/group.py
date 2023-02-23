@@ -15,7 +15,8 @@ def add_group(request):
     try:
         if request.method == 'POST':
             name = request.POST['name']
-            Group.objects.create(name=name, user=request.user)
+            group = Group.objects.create(name=name, user=request.user)
+            group.members.add(request.user)
             messages.info(request, "GROUP CREATED SUCCESSFULLY")
             return redirect('index')
         return render(request, 'index.html')

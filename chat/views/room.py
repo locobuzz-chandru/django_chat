@@ -8,5 +8,6 @@ from channels.db import database_sync_to_async
 def room(request, room_name):
     messages = Messages.objects.filter(group__name=room_name)
     return render(request, "room.html", {"room_name": room_name,
-                                         "message_list": messages
+                                         "message_list": messages,
+                                         "username": request.user.username,
                                          })

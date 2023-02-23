@@ -8,20 +8,20 @@
 <body>
 <div class="container">
     <div class="header">
-        <h1>WebChat</h1>
+        <h1>{{room_name}}</h1>
     </div>
-        <div class="body">
+    <div class="body">
         {% for message in message_list %}
-            {% if  message.user.username == request.user.username %}
-                <p class="message user_message">{{ message.user.username }} : {{ message.message }}</p>
-            {% else %}
-                <p class="message">{{ message.user.username }} : {{ message.message }}</p>
-            {% endif %}
+        {% if message.user == request.user.username %}
+        <p class="message user_message">{{ message.user }} : {{ message.message }}</p>
+        {% else %}
+        <p class="message">{{ message.user }} : {{ message.message }}</p>
+        {% endif %}
         {% endfor %}
-        </div>
+    </div>
     <div class="footer">
         <form>
-            <input id="chat-message-input" type="text" name="">
+            <input id="chat-message-input" type="text" name="" placeholder="Type here...">
             <input id="chat-message-submit" type="button" class="button" value="SEND">
         </form>
     </div>
@@ -80,6 +80,7 @@
             }));
             messageInputDom.value = '';
         };
+
 </script>
 </body>
 </html>

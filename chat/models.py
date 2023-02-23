@@ -9,7 +9,7 @@ class Group(models.Model):
 
 class Messages(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    user = models.ForeignKey('user.User', on_delete=models.CASCADE)
+    user = models.CharField(max_length=255)
     message = models.TextField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
 

@@ -31,7 +31,6 @@
         <tr>
             <th scope="col">User ID</th>
             <th scope="col">Group Name</th>
-            <th scope="col">Control</th>
         </tr>
         </thead>
         <tbody>
@@ -40,9 +39,11 @@
             <td>{{group.user_id}}</td>
             <td><a href="{% url 'room' room_name=group.name %}" >{{group.name}}</a></td>
             <td>
+                {% if group.user_id == request.user.id %}
                 <a href="{% url 'edit' group.id %}" class="btn mr-5 btn-warning">EDIT</a>
                 <a href="{% url 'delete' group.id %}" class="btn mr-5 btn-danger">DELETE</a>
                 <a href="{% url 'members' group_id=group.id %}" class="btn btn-danger">MEMBERS</a>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
