@@ -32,22 +32,6 @@
         <button type="submit" class="buttons"><a href="{% url 'logout' %}">LOGOUT</a></button>
     </div>
 </div>
-
-<!--<textarea id="chat-log" cols="100" rows="20" style="display:flex; margin-left:500px; margin-top: 100px; width: 300px">-->
-<!--        {% for message in message_list %}-->
-<!--            {{ message.user.username }} : {{ message.message }}-->
-<!--        {% endfor %}-->
-<!--    </textarea><br>-->
-<!--<div style="display:flex; margin-left:500px; margin-top: 5px;">-->
-<!--    <input id="chat-message-input" size="34"><br>-->
-<!--    <input id="chat-message-submit" type="button" value="Send">-->
-<!--</div>-->
-<!--<div class="button" style="display:flex; margin-left:500px; margin-top: 10px">-->
-<!--    <a href="{% url 'logout' %}">-->
-<!--        <button class="button">Logout</button>-->
-<!--    </a>-->
-<!--</div>-->
-
 {{ room_name|json_script:"room-name" }}
 {{ username|json_script:"username" }}
 <script>
