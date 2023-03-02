@@ -20,6 +20,7 @@
                 {% if member.username == request.user.username %}
                 <span class="btn btn-danger">ADMIN</span>
                 {% else %}
+                <span class="btn mr-5 btn-danger">MEMBER</span>
                 <a href="{% url 'remove_member' group_id=group_id user_id=member.id %}"
                    class="btn btn-danger">DELETE</a>
                 {% endif %}
