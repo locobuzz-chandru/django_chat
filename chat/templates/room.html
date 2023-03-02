@@ -9,6 +9,8 @@
 <div class="container">
     <div class="header">
         <h1>{{room_name}}</h1>
+        <button type="submit"><a href="{% url 'index' %}">INDEX</a></button>
+        <button type="submit"><a href="{% url 'logout' %}">LOGOUT</a></button>
     </div>
     <div class="body">
         {% for message in message_list %}
@@ -24,12 +26,6 @@
             <input id="chat-message-input" type="text" name="" placeholder="Type here...">
             <input id="chat-message-submit" type="button" class="button" value="SEND">
         </form>
-    </div>
-    <div class="text-center mt-4">
-        <button type="submit" class="buttons"><a href="{% url 'index' %}">INDEX</a></button>
-    </div>
-    <div class="text-center mt-4">
-        <button type="submit" class="buttons"><a href="{% url 'logout' %}">LOGOUT</a></button>
     </div>
 </div>
 {{ room_name|json_script:"room-name" }}
@@ -72,6 +68,9 @@
             }));
             messageInputDom.value = '';
         };
+
+
+
 
 
 </script>
